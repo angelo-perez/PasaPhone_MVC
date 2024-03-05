@@ -60,6 +60,7 @@ namespace PasaPhoneWeb.Controllers
             {
                 _context.Add(phone);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Phone listed successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(phone);
@@ -99,6 +100,7 @@ namespace PasaPhoneWeb.Controllers
                 {
                     _context.Update(phone);
                     await _context.SaveChangesAsync();
+                    TempData["success"] = "Phone updated successfully";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -146,6 +148,7 @@ namespace PasaPhoneWeb.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["success"] = "Phone deleted successfully";
             return RedirectToAction(nameof(Index));
         }
 
