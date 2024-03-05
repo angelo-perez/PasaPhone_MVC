@@ -21,6 +21,27 @@ body {
   margin-bottom: 60px;
 }
 
+.create-meetup-box, .edit-meetup-box, .delete-meetup-box {
+    width: 25px;
+    height: 25px;
+}
+
+.create-meetup-label, .edit-meetup-label, .delete-meetup-label {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.create-meetup-desc, .edit-meetup-desc, .delete-meetup-desc {
+    font-size: 12px;
+    color: dimgray;
+}
+
+
+
+
+
+
+
 /*CSS Testing*/
 .welcome-group{
     border-style: outset;
@@ -63,21 +84,6 @@ body {
     border-radius: 10px;
 }
 
-.create-meetup-box, .edit-meetup-box {
-    width: 25px;
-    height: 25px;
-}
-.create-meetup-label, .edit-meetup-label {
-    font-size: 18px;
-    font-weight: 600;
-}
-.create-meetup-desc, .edit-meetup-desc {
-    font-size: 12px;
-    color: dimgray;
-}
-
-
-/*FLEX Example*/
 .box-container{
     display: flex;
     flex-direction: row;

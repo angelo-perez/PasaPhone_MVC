@@ -5,13 +5,13 @@
 }
 
 <form method="post" id="edit_form">
+    <input asp-for="Id" type="hidden" />
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary text-center">Edit Listing</h2>
             <hr />
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="Id" />
         <div class="form-floating mb-3">
             <input asp-for="Brand" class="form-control" placeholder="Enter Phone's Brand" />
             <label asp-for="Brand" class="control-label"></label>
