@@ -1,0 +1,117 @@
+﻿@model PasaPhoneWeb.Models.Phone
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<form method="post" id="create_form">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary text-center">Create New Listing</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-floating mb-3">
+            <input asp-for="Brand" class="form-control" placeholder="Enter Phone's Brand"/>
+            <label asp-for="Brand" class="control-label"></label>
+            <span asp-validation-for="Brand" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Model" class="form-control" placeholder="Enter Phone's Model" />
+            <label asp-for="Model" class="control-label"></label>
+            <span asp-validation-for="Model" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <select asp-for="Condition" class="form-select form-control">
+                <option value="" selected disabled>Select Condition</option>
+                <option value="New">New</option>
+                <option value="Used - Like New">Used - Like New</option>
+                <option value="Used - Good">Used - Good</option>
+                <option value="Used - Fair">Used - Fair</option>
+            </select>
+            <label asp-for="Condition" class="control-label"></label>
+            <span asp-validation-for="Condition" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Price" class="phone-price form-control" placeholder="Enter Phone's Price in Peso'"/>
+            <label asp-for="Price" class="control-label"></label>
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea asp-for="Description" class="form-control" style="height: 80px" placeholder="Tell about the phone"></textarea>
+            <label asp-for="Description" class="control-label"></label>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea asp-for="Issues" class="form-control" style="height: 80px" placeholder="What are the issues?"></textarea>
+            <label asp-for="Issues" class="control-label"></label>
+            <span asp-validation-for="Issues" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-2">
+            <input asp-for="Location" class="form-control" placeholder="Enter Your Location"/>
+            <label asp-for="Location" class="control-label"></label>
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="MeetupPreference" class="control-label fs-4 fw-bold"></label>
+            <p class="fs-6 text-secondary mb-2">Select your preferred meetup arrangement for potential buyers.</p>
+            <input asp-for="MeetupPreference" id="create_combined_meetup_pref" type="hidden" value=""/>
+            <div class="form-check d-flex justify-content-between align-items-center mb-2">
+                <div class="mb-1 d-flex flex-row align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16" style="margin-right: 10px">
+                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+                    </svg>
+                    <div class="d-flex flex-column">
+                        <label for="create_public_meetup" class="create-meetup-label form-check-label">Public Meetup</label>
+                        <label for="create_public_meetup" class="create-meetup-desc mb-0">Meet at public location.</label>
+                    </div>
+                </div>
+                <div class="mt-0">
+                    <input id="create_public_meetup" class="form-check-input create-meetup-box mt-0" type="checkbox" value="Public Meetup" />
+                </div>
+            </div>
+            <div class="form-check d-flex justify-content-between align-items-center mb-2">
+                <div class="mb-1 d-flex flex-row align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16" style="margin-right: 10px">
+                        <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1" />
+                    </svg>
+                    <div class="mb-0 d-flex flex-column">
+                        <label for="create_door_pickup" class="create-meetup-label form-check-label">Door Pickup</label>
+                        <label for="create_door_pickup" class="create-meetup-desc mb-0">Buyer picks up at your door.</label>
+                    </div>
+                </div>
+                <div class="mt-0">
+                    <input id="create_door_pickup" class="form-check-input create-meetup-box mt-0" type="checkbox" value="Door Pickup" />
+                </div>
+            </div>
+            <div class="form-check d-flex justify-content-between align-items-center mb-2">
+                <div class="mb-1 d-flex flex-row align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16" style="margin-right: 10px">
+                        <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1" />
+                    </svg>
+                    <div class="mb-0 d-flex flex-column">
+                        <label for="create_door_dropoff" class="create-meetup-label form-check-label">Door Dropoff</label>
+                        <label for="create_door_dropoff" class="create-meetup-desc mb-0">You drop off at buyer's door.</label>
+                    </div>
+                </div>
+                <div class="mt-0">
+                    <input id="create_door_dropoff" class="form-check-input create-meetup-box mt-0" type="checkbox" value="Door Dropoff" />
+                </div>
+            </div>
+            <span asp-validation-for="MeetupPreference" class="text-danger"></span>
+        </div>
+        <div class="form-group d-flex justify-content-center mt-4">
+            <div class="col-6 col-md-3 m-1 m-md-2">
+                <button id="create_submit_btn" type="submit" class="submit_btn form-control btn btn-primary">Create</button>
+            </div>
+            <div class="col-6 col-md-3 m-1 m-md-2">
+                <a asp-controller="Phones" asp-action="Index" class="form-control btn btn-outline-primary">Back to List</a>
+            </div>
+        
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
