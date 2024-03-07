@@ -1,0 +1,159 @@
+﻿@page
+@model PasaPhoneWebRazor_Temp.Pages.Phones.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<form method="post" id="delete_form">
+    <input asp-for="Phone.Id" type="hidden" />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary text-center">Delete Listing</h2>
+            <hr />
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Phone.Brand" class="form-control" placeholder="Enter Phone's Brand" disabled/>
+            <label asp-for="Phone.Brand" class="control-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Phone.Model" class="form-control" placeholder="Enter Phone's Model" disabled/>
+            <label asp-for="Phone.Model" class="control-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <select asp-for="Phone.Condition" class="form-select form-control" disabled>
+                <option value="" selected disabled>Select Condition</option>
+                <option value="New">New</option>
+                <option value="Used - Like New">Used - Like New</option>
+                <option value="Used - Good">Used - Good</option>
+                <option value="Used - Fair">Used - Fair</option>
+            </select>
+            <label asp-for="Phone.Condition" class="control-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Phone.Price" class="phone-price form-control" placeholder="Enter Phone's Price in Peso'" disabled/>
+            <label asp-for="Phone.Price" class="control-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea asp-for="Phone.Description" class="form-control" style="height: 80px" placeholder="Tell about the phone" disabled></textarea>
+            <label asp-for="Phone.Description" class="control-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea asp-for="Phone.Issues" class="form-control" style="height: 80px" placeholder="What are the issues?" disabled></textarea>
+            <label asp-for="Phone.Issues" class="control-label"></label>
+        </div>
+        <div class="form-floating mb-2">
+            <input asp-for="Phone.Location" class="form-control" placeholder="Enter Your Location" disabled/>
+            <label asp-for="Phone.Location" class="control-label"></label>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Phone.MeetupPreference" class="control-label fs-4 fw-bold"></label>
+            <p class="fs-6 text-secondary mb-2">Select your preferred meetup arrangement for potential buyers.</p>
+            <input asp-for="Phone.MeetupPreference" id="delete_combined_meetup_pref" type="hidden" value="" />
+            @{
+                string IsMeetupBoxChecked(string meetupOption)
+                {
+                    return Model.Phone.MeetupPreference.Contains(meetupOption) ? "checked" : "";
+                }
+            }
+            <div class="form-check d-flex justify-content-between align-items-center mb-2">
+                <div class="mb-1 d-flex flex-row align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16" style="margin-right: 10px">
+                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+                    </svg>
+                    <div class="d-flex flex-column">
+                        <label for="delete_public_meetup" class="delete-meetup-label form-check-label">Public Meetup</label>
+                        <label for="delete_public_meetup" class="delete-meetup-desc mb-0">Meet at public location.</label>
+                    </div>
+                </div>
+                <div class="mt-0">
+                    <input id="delete_public_meetup" class="form-check-input delete-meetup-box mt-0" type="checkbox" value="Public Meetup" @IsMeetupBoxChecked("Public Meetup") disabled/>
+                </div>
+            </div>
+            <div class="form-check d-flex justify-content-between align-items-center mb-2">
+                <div class="mb-1 d-flex flex-row align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16" style="margin-right: 10px">
+                        <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1" />
+                    </svg>
+                    <div class="mb-0 d-flex flex-column">
+                        <label for="delete_door_pickup" class="delete-meetup-label form-check-label">Door Pickup</label>
+                        <label for="delete_door_pickup" class="delete-meetup-desc mb-0">Buyer picks up at your door.</label>
+                    </div>
+                </div>
+                <div class="mt-0">
+                    <input id="delete_door_pickup" class="form-check-input delete-meetup-box mt-0" type="checkbox" value="Door Pickup" @IsMeetupBoxChecked("Door Pickup") disabled>
+                </div>
+            </div>
+            <div class="form-check d-flex justify-content-between align-items-center mb-2">
+                <div class="mb-1 d-flex flex-row align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16" style="margin-right: 10px">
+                        <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1" />
+                    </svg>
+                    <div class="mb-0 d-flex flex-column">
+                        <label for="delete_door_dropoff" class="delete-meetup-label form-check-label">Door Dropoff</label>
+                        <label for="delete_door_dropoff" class="delete-meetup-desc mb-0">You drop off at buyer's door.</label>
+                    </div>
+                </div>
+                <div class="mt-0">
+                    <input id="delete_door_dropoff" class="form-check-input delete-meetup-box mt-0" type="checkbox" value="Door Dropoff" @IsMeetupBoxChecked("Door Dropoff") disabled/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group d-flex justify-content-center mt-4">
+            <div class="col-6 col-md-3 m-1 m-md-2">
+                <button id="initial_delete_btn" type="button" class="submit-btn form-control btn btn-danger">Delete</button>
+            </div>
+            <div class="col-6 col-md-3 m-1 m-md-2">
+                <a asp-page="/Phones/Index" class="form-control btn btn-outline-primary">Back to List</a>
+            </div>
+        </div>
+
+        <div class="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete @Model.Phone.Brand @Model.Phone.Model</h5>
+                        <button id="close_icon_btn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this listing?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="confirm_delete_btn" type="submit" class="btn btn-danger">Delete</button>
+                        <button id="cancel_delete_btn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        var modal = document.querySelector('.modal');
+        var initialDeleteBtn = document.querySelector('#initial_delete_btn');
+        var cancelDeleteBtn = document.querySelector('#cancel_delete_btn');
+        var closeIconBtn = document.querySelector('#close_icon_btn');
+
+        initialDeleteBtn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        cancelDeleteBtn.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        closeIconBtn.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+}
