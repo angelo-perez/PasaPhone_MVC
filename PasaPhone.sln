@@ -5,7 +5,11 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PasaPhoneWeb", "PasaPhoneWeb\PasaPhoneWeb.csproj", "{46D9BB9D-9A5F-4B6A-B1D0-26A06176D375}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PasaPhoneWebRazor_Temp", "PasaPhoneWebRazor_Temp\PasaPhoneWebRazor_Temp.csproj", "{4C39FED2-C136-4525-8A92-EF248728A70B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasaPhone.DataAccess", "PasaPhone.DataAccess\PasaPhone.DataAccess.csproj", "{B2D1FA0E-C2FD-404E-B5E3-6682658FF2E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasaPhone.Models", "PasaPhone.Models\PasaPhone.Models.csproj", "{A61B6DD1-CC5F-48C1-8BF8-A64A6FB0A144}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasaPhone.Utility", "PasaPhone.Utility\PasaPhone.Utility.csproj", "{B50DBFF1-2AC5-4B8C-934E-FD55A863729B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +21,18 @@ Global
 		{46D9BB9D-9A5F-4B6A-B1D0-26A06176D375}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46D9BB9D-9A5F-4B6A-B1D0-26A06176D375}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46D9BB9D-9A5F-4B6A-B1D0-26A06176D375}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C39FED2-C136-4525-8A92-EF248728A70B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C39FED2-C136-4525-8A92-EF248728A70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C39FED2-C136-4525-8A92-EF248728A70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C39FED2-C136-4525-8A92-EF248728A70B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2D1FA0E-C2FD-404E-B5E3-6682658FF2E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2D1FA0E-C2FD-404E-B5E3-6682658FF2E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2D1FA0E-C2FD-404E-B5E3-6682658FF2E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2D1FA0E-C2FD-404E-B5E3-6682658FF2E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A61B6DD1-CC5F-48C1-8BF8-A64A6FB0A144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A61B6DD1-CC5F-48C1-8BF8-A64A6FB0A144}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A61B6DD1-CC5F-48C1-8BF8-A64A6FB0A144}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A61B6DD1-CC5F-48C1-8BF8-A64A6FB0A144}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B50DBFF1-2AC5-4B8C-934E-FD55A863729B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B50DBFF1-2AC5-4B8C-934E-FD55A863729B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B50DBFF1-2AC5-4B8C-934E-FD55A863729B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B50DBFF1-2AC5-4B8C-934E-FD55A863729B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
