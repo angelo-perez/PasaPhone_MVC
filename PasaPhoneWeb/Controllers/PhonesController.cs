@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PasaPhoneWeb.Data;
-using PasaPhoneWeb.Models;
+using PasaPhone.DataAccess.Data;
+using PasaPhone.Models;
 
 namespace PasaPhoneWeb.Controllers
 {

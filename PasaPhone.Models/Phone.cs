@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PasaPhoneWeb.Models
+namespace PasaPhone.Models
 {
     public class Phone
     {

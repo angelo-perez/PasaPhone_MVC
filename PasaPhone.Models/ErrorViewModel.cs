@@ -1,4 +1,4 @@
-namespace PasaPhoneWeb.Models
+namespace PasaPhone.Models
 {
     public class ErrorViewModel
     {

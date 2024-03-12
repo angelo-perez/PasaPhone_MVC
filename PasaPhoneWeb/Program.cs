@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PasaPhoneWeb.Data;
+using PasaPhone.DataAccess.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

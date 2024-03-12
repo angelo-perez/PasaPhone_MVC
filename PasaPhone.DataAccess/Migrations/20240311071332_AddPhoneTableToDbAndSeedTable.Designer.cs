@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PasaPhoneWeb.Data;
+using PasaPhone.DataAccess.Data;
 
 #nullable disable
 
-namespace PasaPhoneWeb.Migrations
+namespace PasaPhone.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240227051219_SeedPhoneTable")]
-    partial class SeedPhoneTable
+    [Migration("20240311071332_AddPhoneTableToDbAndSeedTable")]
+    partial class AddPhoneTableToDbAndSeedTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace PasaPhoneWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PasaPhoneWeb.Models.Phone", b =>
+            modelBuilder.Entity("PasaPhone.Models.Phone", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,11 +45,9 @@ namespace PasaPhoneWeb.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Issues")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
@@ -77,7 +75,7 @@ namespace PasaPhoneWeb.Migrations
                             Id = 1,
                             Brand = "Samsung",
                             Condition = "New",
-                            DateModified = new DateTime(2024, 2, 27, 13, 12, 18, 622, DateTimeKind.Local).AddTicks(6381),
+                            DateModified = new DateTime(2024, 3, 11, 15, 13, 31, 747, DateTimeKind.Local).AddTicks(4547),
                             Description = "Brand new phone, never used.",
                             Issues = "None",
                             Location = "Quezon City, NCR",
@@ -90,7 +88,7 @@ namespace PasaPhoneWeb.Migrations
                             Id = 2,
                             Brand = "Apple",
                             Condition = "Used - Like new",
-                            DateModified = new DateTime(2024, 2, 27, 13, 12, 18, 622, DateTimeKind.Local).AddTicks(6383),
+                            DateModified = new DateTime(2024, 3, 11, 15, 13, 31, 747, DateTimeKind.Local).AddTicks(4550),
                             Description = "Slightly used, looks like new.",
                             Issues = "No scratches or dents.",
                             Location = "Makati City, NCR",
@@ -103,7 +101,7 @@ namespace PasaPhoneWeb.Migrations
                             Id = 3,
                             Brand = "OnePlus",
                             Condition = "Used - Fair",
-                            DateModified = new DateTime(2024, 2, 27, 13, 12, 18, 622, DateTimeKind.Local).AddTicks(6385),
+                            DateModified = new DateTime(2024, 3, 11, 15, 13, 31, 747, DateTimeKind.Local).AddTicks(4553),
                             Description = "Fairly used phone, with minor scratches.",
                             Issues = "Small scratch on the screen.",
                             Location = "Cebu City, Cebu",
@@ -116,7 +114,7 @@ namespace PasaPhoneWeb.Migrations
                             Id = 4,
                             Brand = "Xiaomi",
                             Condition = "New",
-                            DateModified = new DateTime(2024, 2, 27, 13, 12, 18, 622, DateTimeKind.Local).AddTicks(6387),
+                            DateModified = new DateTime(2024, 3, 11, 15, 13, 31, 747, DateTimeKind.Local).AddTicks(4555),
                             Description = "Fresh out of the box, never been used.",
                             Issues = "None",
                             Location = "Davao City, Davao",
@@ -129,7 +127,7 @@ namespace PasaPhoneWeb.Migrations
                             Id = 5,
                             Brand = "Realme",
                             Condition = "Used - Good",
-                            DateModified = new DateTime(2024, 2, 27, 13, 12, 18, 622, DateTimeKind.Local).AddTicks(6389),
+                            DateModified = new DateTime(2024, 3, 11, 15, 13, 31, 747, DateTimeKind.Local).AddTicks(4557),
                             Description = "Good condition, used for a few months.",
                             Issues = "Minor wear and tear on the back.",
                             Location = "Manila City, NCR",

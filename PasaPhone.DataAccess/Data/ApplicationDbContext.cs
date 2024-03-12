@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PasaPhoneWeb.Models;
+using PasaPhone.Models;
 
-namespace PasaPhoneWeb.Data
+namespace PasaPhone.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {
