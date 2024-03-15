@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PasaPhone.DataAccess.Data;
+using PasaPhone.DataAccess.Repository;
+using PasaPhone.DataAccess.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // for repo pattern
 
 var app = builder.Build();
 

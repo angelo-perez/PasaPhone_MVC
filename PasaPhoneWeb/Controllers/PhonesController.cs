@@ -6,26 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PasaPhone.DataAccess.Data;
+using PasaPhone.DataAccess.Repository.IRepository;
 using PasaPhone.Models;
 
 namespace PasaPhoneWeb.Controllers
 {
     public class PhonesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PhonesController(ApplicationDbContext context)
+        public PhonesController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: Phones
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Phones.ToListAsync());
+            return View(await _unitOfWork.Phone.GetAll().ToListAsync());
         }
 
-        // GET: Phones/Details/5
+        // GET: Phones/Details/Id
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,8 +34,7 @@ namespace PasaPhoneWeb.Controllers
                 return NotFound();
             }
 
-            var phone = await _context.Phones
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var phone = await _unitOfWork.Phone.Get(m => m.Id == id);
             if (phone == null)
             {
                 return NotFound();
@@ -50,23 +50,21 @@ namespace PasaPhoneWeb.Controllers
         }
 
         // POST: Phones/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Brand,Model,Condition,Price,Description,Issues,Location,MeetupPreference")] Phone phone)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(phone);
-                await _context.SaveChangesAsync();
+                _unitOfWork.Phone.Add(phone);
+                await _unitOfWork.Save();
                 TempData["success"] = "Phone listed successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(phone);
         }
 
-        // GET: Phones/Edit/5
+        // GET: Phones/Edit/Id
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,7 +72,8 @@ namespace PasaPhoneWeb.Controllers
                 return NotFound();
             }
 
-            var phone = await _context.Phones.FindAsync(id);
+            var phone = await _unitOfWork.Phone.Get(u=>u.Id==id);
+
             if (phone == null)
             {
                 return NotFound();
@@ -82,9 +81,7 @@ namespace PasaPhoneWeb.Controllers
             return View(phone);
         }
 
-        // POST: Phones/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Phones/Edit/Id
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Brand,Model,Condition,Price,Description,Issues,Location,MeetupPreference")] Phone phone)
@@ -98,8 +95,8 @@ namespace PasaPhoneWeb.Controllers
             {
                 try
                 {
-                    _context.Update(phone);
-                    await _context.SaveChangesAsync();
+                    _unitOfWork.Phone.Update(phone);
+                    await _unitOfWork.Save();
                     TempData["success"] = "Phone updated successfully";
                 }
                 catch (DbUpdateConcurrencyException)
@@ -118,7 +115,7 @@ namespace PasaPhoneWeb.Controllers
             return View(phone);
         }
 
-        // GET: Phones/Delete/5
+        // GET: Phones/Delete/Id
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,8 +123,7 @@ namespace PasaPhoneWeb.Controllers
                 return NotFound();
             }
 
-            var phone = await _context.Phones
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var phone = await _unitOfWork.Phone.Get(u => u.Id == id);
             if (phone == null)
             {
                 return NotFound();
@@ -136,25 +132,25 @@ namespace PasaPhoneWeb.Controllers
             return View(phone);
         }
 
-        // POST: Phones/Delete/5
+        // POST: Phones/Delete/Id
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var phone = await _context.Phones.FindAsync(id);
+            var phone = await _unitOfWork.Phone.Get(u => u.Id == id);
             if (phone != null)
             {
-                _context.Phones.Remove(phone);
+                _unitOfWork.Phone.Remove(phone);
             }
 
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Save();
             TempData["success"] = "Phone deleted successfully";
             return RedirectToAction(nameof(Index));
         }
 
         private bool PhoneExists(int id)
         {
-            return _context.Phones.Any(e => e.Id == id);
+            return _unitOfWork.Phone.IsItemExists(e => e.Id == id);
         }
     }
 }
