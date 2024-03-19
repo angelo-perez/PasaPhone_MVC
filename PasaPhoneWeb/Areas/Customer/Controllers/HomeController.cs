@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using PasaPhone.Models;
 using System.Diagnostics;
 
-namespace PasaPhoneWeb.Controllers
+namespace PasaPhoneWeb.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

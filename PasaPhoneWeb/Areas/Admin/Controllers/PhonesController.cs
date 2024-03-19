@@ -9,8 +9,9 @@ using PasaPhone.DataAccess.Data;
 using PasaPhone.DataAccess.Repository.IRepository;
 using PasaPhone.Models;
 
-namespace PasaPhoneWeb.Controllers
+namespace PasaPhoneWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class PhonesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -72,7 +73,7 @@ namespace PasaPhoneWeb.Controllers
                 return NotFound();
             }
 
-            var phone = await _unitOfWork.Phone.Get(u=>u.Id==id);
+            var phone = await _unitOfWork.Phone.Get(u => u.Id == id);
 
             if (phone == null)
             {

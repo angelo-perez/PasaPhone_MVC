@@ -27,7 +27,7 @@ namespace PasaPhone.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public Task<T> Get(Expression<Func<T, bool>> filter)
+        public Task<T?> Get(Expression<Func<T, bool>> filter)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);

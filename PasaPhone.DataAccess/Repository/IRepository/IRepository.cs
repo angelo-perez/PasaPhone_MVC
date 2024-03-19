@@ -12,7 +12,7 @@ namespace PasaPhone.DataAccess.Repository.IRepository
         // T - Phone
         //IEnumerable<T> GetAll(); // method for retrieving all records (phones)
         IQueryable<T> GetAll(); // method for retrieving all records (phones)
-        Task<T> Get(Expression<Func<T, bool>> filter); // method for retrieving individual record (phone)
+        Task<T?> Get(Expression<Func<T, bool>> filter); // method for retrieving individual record (phone)
         void Add(T entity); // method for adding a record (phone)
         void Remove(T entity); // method for deleting a record (phone)
         void RemoveRange(IEnumerable<T> entity); // method for deleting a range of records (phones)
