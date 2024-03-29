@@ -12,11 +12,13 @@ namespace PasaPhone.DataAccess.Repository
     {
         private ApplicationDbContext _context;
         public IPhoneRepository Phone{ get; private set; }
+        public ISpecificationRepository Specification { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             Phone = new PhoneRepository(_context);
+            Specification = new SpecificationRepository(_context);
         }
 
         public Task Save()

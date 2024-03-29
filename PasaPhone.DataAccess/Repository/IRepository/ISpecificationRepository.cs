@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PasaPhone.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace PasaPhone.DataAccess.Repository.IRepository
 {
-    public interface IUnitOfWork
+    public interface ISpecificationRepository : IRepository<Specification>
     {
-        IPhoneRepository Phone { get; }
-        ISpecificationRepository Specification { get; }
-        Task Save();
+        void Update(Specification specification);
     }
 }

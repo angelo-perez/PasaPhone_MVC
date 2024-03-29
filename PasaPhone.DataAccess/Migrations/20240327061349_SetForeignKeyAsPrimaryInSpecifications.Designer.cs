@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PasaPhone.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using PasaPhone.DataAccess.Data;
 namespace PasaPhone.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240327061349_SetForeignKeyAsPrimaryInSpecifications")]
+    partial class SetForeignKeyAsPrimaryInSpecifications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,7 +78,7 @@ namespace PasaPhone.DataAccess.Migrations
                             Id = 1,
                             Brand = "Samsung",
                             Condition = "New",
-                            DateModified = new DateTime(2024, 3, 27, 14, 36, 3, 837, DateTimeKind.Local).AddTicks(7672),
+                            DateModified = new DateTime(2024, 3, 27, 14, 13, 48, 349, DateTimeKind.Local).AddTicks(9665),
                             Description = "Brand new phone, never used.",
                             Issues = "None",
                             Location = "Quezon City, NCR",
@@ -88,7 +91,7 @@ namespace PasaPhone.DataAccess.Migrations
                             Id = 2,
                             Brand = "Apple",
                             Condition = "Used - Like new",
-                            DateModified = new DateTime(2024, 3, 27, 14, 36, 3, 837, DateTimeKind.Local).AddTicks(7675),
+                            DateModified = new DateTime(2024, 3, 27, 14, 13, 48, 349, DateTimeKind.Local).AddTicks(9668),
                             Description = "Slightly used, looks like new.",
                             Issues = "No scratches or dents.",
                             Location = "Makati City, NCR",
@@ -101,7 +104,7 @@ namespace PasaPhone.DataAccess.Migrations
                             Id = 3,
                             Brand = "OnePlus",
                             Condition = "Used - Fair",
-                            DateModified = new DateTime(2024, 3, 27, 14, 36, 3, 837, DateTimeKind.Local).AddTicks(7678),
+                            DateModified = new DateTime(2024, 3, 27, 14, 13, 48, 349, DateTimeKind.Local).AddTicks(9670),
                             Description = "Fairly used phone, with minor scratches.",
                             Issues = "Small scratch on the screen.",
                             Location = "Cebu City, Cebu",
@@ -113,7 +116,7 @@ namespace PasaPhone.DataAccess.Migrations
 
             modelBuilder.Entity("PasaPhone.Models.Specification", b =>
                 {
-                    b.Property<int>("SpecificationId")
+                    b.Property<int>("PhoneId")
                         .HasColumnType("int");
 
                     b.Property<int?>("BatteryCapacity")
@@ -146,14 +149,14 @@ namespace PasaPhone.DataAccess.Migrations
                     b.Property<int?>("Storage")
                         .HasColumnType("int");
 
-                    b.HasKey("SpecificationId");
+                    b.HasKey("PhoneId");
 
                     b.ToTable("Specifications");
 
                     b.HasData(
                         new
                         {
-                            SpecificationId = 1,
+                            PhoneId = 1,
                             BatteryCapacity = 4000,
                             Camera = "Triple - 12 MP wide, 64 MP telephoto, 12 MP ultrawide",
                             ChargingSpeed = "Fast charging 25W, USB Power Delivery 3.0, Fast Qi/PMA wireless charging 15W, Reverse wireless charging 4.5W",
@@ -167,7 +170,7 @@ namespace PasaPhone.DataAccess.Migrations
                         },
                         new
                         {
-                            SpecificationId = 2,
+                            PhoneId = 2,
                             BatteryCapacity = 2815,
                             Camera = "Triple - 12 MP wide, 12 MP telephoto, 12 MP ultrawide",
                             ChargingSpeed = "Fast charging 20W, 50% in 30 min (advertised), USB Power Delivery 2.0, MagSafe wireless charging 15W",
@@ -181,7 +184,7 @@ namespace PasaPhone.DataAccess.Migrations
                         },
                         new
                         {
-                            SpecificationId = 3,
+                            PhoneId = 3,
                             BatteryCapacity = 4500,
                             Camera = "Quad - 48 MP wide, 16 MP ultrawide, 5 MP macro, 2 MP depth",
                             ChargingSpeed = "Fast charging 65W, 100% in 39 min (advertised), Reverse charging 3W",
@@ -199,7 +202,7 @@ namespace PasaPhone.DataAccess.Migrations
                 {
                     b.HasOne("PasaPhone.Models.Phone", "Phone")
                         .WithMany()
-                        .HasForeignKey("SpecificationId")
+                        .HasForeignKey("PhoneId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

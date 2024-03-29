@@ -50,6 +50,16 @@ body {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+.required-field:after {
+    content: " *";
+    color: red;
+}
+
+.clickable-rows{
+    cursor: pointer;
+}
+
+
 
 /*CSS Testing*/
 .welcome-group{

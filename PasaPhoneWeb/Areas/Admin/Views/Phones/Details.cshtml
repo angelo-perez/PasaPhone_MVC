@@ -1,4 +1,4 @@
-﻿@model Phone
+﻿@model PhoneAndSpecificationsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,62 +11,122 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Brand)
+            @Html.DisplayNameFor(model => model.Phone.Brand)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Brand)
+            @Html.DisplayFor(model => model.Phone.Brand)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Model)
+            @Html.DisplayNameFor(model => model.Phone.Model)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Model)
+            @Html.DisplayFor(model => model.Phone.Model)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specification.Os)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specification.Os)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specification.Chipset)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specification.Chipset)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specification.Memory)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specification.Memory)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specification.Storage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specification.Storage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specification.Camera)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specification.Camera)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specification.DisplayResolution)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specification.DisplayResolution)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specification.DisplayType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specification.DisplayType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specification.BatteryCapacity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specification.BatteryCapacity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specification.ChargingSpeed)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specification.ChargingSpeed)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specification.OtherSpecs)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specification.OtherSpecs)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Condition)
+            @Html.DisplayNameFor(model => model.Phone.Condition)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Condition)
+            @Html.DisplayFor(model => model.Phone.Condition)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.Phone.Price)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.Phone.Price)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Phone.Description)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Phone.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Issues)
+            @Html.DisplayNameFor(model => model.Phone.Issues)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Issues)
+            @Html.DisplayFor(model => model.Phone.Issues)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Location)
+            @Html.DisplayNameFor(model => model.Phone.Location)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Location)
+            @Html.DisplayFor(model => model.Phone.Location)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MeetupPreference)
+            @Html.DisplayNameFor(model => model.Phone.MeetupPreference)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MeetupPreference)
+            @Html.DisplayFor(model => model.Phone.MeetupPreference)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateModified)
+            @Html.DisplayNameFor(model => model.Phone.DateModified)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateModified)
+            @Html.DisplayFor(model => model.Phone.DateModified)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Phone.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

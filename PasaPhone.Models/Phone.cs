@@ -41,35 +41,21 @@ namespace PasaPhone.Models
         [Display(Name = "Date Modified")]
         public DateTime DateModified { get; set; } = DateTime.Now; // Date Listed / Edited
 
-        // Filters (w/ Sort):
-        // Price (Min-Max)
-        // Location (checkbox)
-        // Date Listed
-        // Condition
-        // Brand
-        // Chipset
-        // OS
-        // Memory
-        // Storage
-        // Display
-        // Battery
+        public string? ImageUrl { get; set; }
 
     }
 
-    //public class PhoneSpecs
-    //{
-    //    public int Id { get; set; }
-    //    [ForeignKey("Phone")]
-    //    public int PhoneId { get; set; }
-    //    public string Chipset { get; set; }
-    //    public string Camera { get; set; }
-    //    public string Os { get; set; } // Android, iOS, Other
-    //    public string DisplayType { get; set; } // IPS-LCD, OLED, AMOLED, Retina, Others
-    //    public string DisplayResolution { get; set; }
-    //    public int Memory { get; set; }
-    //    public int Storage { get; set; }
-    //    public string Battery { get; set; }
-    //    public string Charging { get; set; }
-    //    public string OtherSpecs { get; set; }
-    //}
+    // Filters (w/ Sort):
+    // Price (Min-Max)
+    // Location (checkbox)
+    // Date Listed
+    // Condition
+    // Brand
+    // Chipset
+    // OS
+    // Memory
+    // Storage
+    // Display
+    // Battery
+
 }
