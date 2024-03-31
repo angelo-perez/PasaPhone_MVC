@@ -66,8 +66,8 @@ namespace PasaPhone.DataAccess.Data
                     Os = "Android",
                     DisplayType = "Dynamic AMOLED 2X",
                     DisplayResolution = "Quad HD+",
-                    Memory = 12, // GB RAM
-                    Storage = 128, // GB
+                    Memory = "12GB", // GB RAM
+                    Storage = "128GB", // GB
                     BatteryCapacity = 4000, // mAh
                     ChargingSpeed = "Fast charging 25W, USB Power Delivery 3.0, Fast Qi/PMA wireless charging 15W, Reverse wireless charging 4.5W",
                     OtherSpecs = "IP68 dust/water resistant (up to 1.5m for 30 mins), HDR10+, 120Hz refresh rate"
@@ -80,8 +80,8 @@ namespace PasaPhone.DataAccess.Data
                     Os = "iOS",
                     DisplayType = "Super Retina XDR OLED",
                     DisplayResolution = "Full HD+",
-                    Memory = 6, // GB RAM
-                    Storage = 128, // GB
+                    Memory = "6GB", // GB RAM
+                    Storage = "128GB", // GB
                     BatteryCapacity = 2815, // mAh
                     ChargingSpeed = "Fast charging 20W, 50% in 30 min (advertised), USB Power Delivery 2.0, MagSafe wireless charging 15W",
                     OtherSpecs = "IP68 dust/water resistant (up to 6m for 30 mins), Ceramic Shield front, HDR10, Dolby Vision"
@@ -94,8 +94,8 @@ namespace PasaPhone.DataAccess.Data
                     Os = "Android",
                     DisplayType = "Fluid AMOLED",
                     DisplayResolution = "Full HD+",
-                    Memory = 8, // GB RAM
-                    Storage = 128, // GB
+                    Memory = "8GB", // GB RAM
+                    Storage = "128GB", // GB
                     BatteryCapacity = 4500, // mAh
                     ChargingSpeed = "Fast charging 65W, 100% in 39 min (advertised), Reverse charging 3W",
                     OtherSpecs = "HDR10+, 120Hz refresh rate, Corning Gorilla Glass 5"

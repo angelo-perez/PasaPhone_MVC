@@ -25,9 +25,9 @@ namespace PasaPhone.Models
         [Display(Name = "Display Resolution")]
         public string? DisplayResolution { get; set; } // 720p, 1080p, 2k, 4k, others
         [Display(Name = "Memory Size (GB)")]
-        public int? Memory { get; set; }
+        public string? Memory { get; set; }
         [Display(Name = "Storage Size (GB)")]
-        public int? Storage { get; set; }
+        public string? Storage { get; set; }
         [Display(Name = "Battery Capacity (mAh)")]
         public int? BatteryCapacity { get; set; }
         [Display(Name = "Charging Speed (W)")]

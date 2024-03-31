@@ -57,6 +57,7 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
         // GET: Phones/Create
         public IActionResult Create()
         {
+            InitializePhoneDetailsOptions();
             return View();
         }
 
@@ -88,6 +89,7 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            InitializePhoneDetailsOptions();
             return View(phone);
         }
 
@@ -165,6 +167,25 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
             return _unitOfWork.Phone.IsItemExists(e => e.Id == id);
         }
 
+        private void InitializePhoneDetailsOptions()
+        {
+            List<string> conditionList = new List<string>() {
+                "New",
+                "Used - Like New",
+                "Used - Good",
+                "Used - Fair"
+            };
+
+            IEnumerable<SelectListItem> ConditionOptions = conditionList.Select(c =>
+                new SelectListItem
+                {
+                    Text = c,
+                    Value = c.ToString()
+                }
+            );
+
+            ViewBag.ConditionOptions = ConditionOptions;
+        }
     }
 
 }

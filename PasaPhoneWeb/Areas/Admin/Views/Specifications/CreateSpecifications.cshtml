@@ -17,11 +17,8 @@
             <div class="border p-3 rounded">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating mb-3">
-                    <select asp-for="Os" class="form-select form-control">
-                        <option value="" selected disabled>Select Operating System</option>
-                        <option value="Android">Android</option>
-                        <option value="iOS">iOS</option>
-                        <option value="Others">Others</option>
+                    <select asp-for="Os" asp-items="ViewBag.OsOptions" class="form-select form-control">
+                        <option selected disabled>--Select Operating System--</option>
                     </select>
                     <label asp-for="Os" class="control-label"></label>
                     <span asp-validation-for="Os" class="text-danger"></span>
@@ -32,12 +29,16 @@
                     <span asp-validation-for="Chipset" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Memory" class="form-control" placeholder="Enter Phone's Memory" />
+                    <select asp-for="Memory" asp-items="ViewBag.MemoryOptions" class="form-select" placeholder="Choose Phone's Memory Size">
+                        <option disabled selected>--Select Memory Size--</option>
+                    </select>
                     <label asp-for="Memory" class="control-label"></label>
                     <span asp-validation-for="Memory" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Storage" class="form-control" placeholder="Enter Phone's Storage" />
+                    <select asp-for="Storage" asp-items="ViewBag.StorageOptions" class="form-select" placeholder="Enter Phone's Storage Size">
+                        <option disabled selected>--Select Storage Size--</option>
+                    </select>
                     <label asp-for="Storage" class="control-label"></label>
                     <span asp-validation-for="Storage" class="text-danger"></span>
                 </div>
