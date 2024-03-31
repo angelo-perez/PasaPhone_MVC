@@ -75,7 +75,8 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
                 try
                 {
                     var phoneData = TempData["editedPhoneData"] as string;
-                    var phone = JsonConvert.DeserializeObject<Phone>(phoneData);
+                    var phone = JsonConvert.DeserializeObject<Phone>(phoneData!);
+
                     _unitOfWork.Phone.Update(phone);
                     _unitOfWork.Specification.Update(spec);
                     await _unitOfWork.Save();
