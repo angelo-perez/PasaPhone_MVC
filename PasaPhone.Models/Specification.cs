@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,6 +14,7 @@ namespace PasaPhone.Models
     {
         public int SpecificationId { get; set; }
         [ForeignKey("SpecificationId")]
+        [ValidateNever]
         public Phone? Phone { get; set; }
 
         public string? Chipset { get; set; }
