@@ -55,9 +55,15 @@ body {
     color: red;
 }
 
-.clickable-rows{
+.clickable-rows, .meetup-pref-group, .meetup-pref-label-group label {
     cursor: pointer;
 }
+
+
+
+
+
+
 
 
 

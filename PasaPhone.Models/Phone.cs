@@ -41,6 +41,7 @@ namespace PasaPhone.Models
         [Display(Name = "Date Modified")]
         public DateTime DateModified { get; set; } = DateTime.Now; // Date Listed / Edited
 
+        [Display(Name = "Phone's Image")]
         public string? ImageUrl { get; set; }
 
     }

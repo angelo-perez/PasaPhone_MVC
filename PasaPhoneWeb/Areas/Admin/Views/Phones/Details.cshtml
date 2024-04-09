@@ -116,7 +116,7 @@
             @Html.DisplayNameFor(model => model.Phone.MeetupPreference)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Phone.MeetupPreference)
+            @Html.Raw(Model.Phone.MeetupPreference.Replace(",", "<br />"))
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Phone.DateModified)

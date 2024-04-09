@@ -57,7 +57,6 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
         // GET: Phones/Create
         public IActionResult Create()
         {
-            InitializePhoneDetailsOptions();
             return View();
         }
 
@@ -89,7 +88,6 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            InitializePhoneDetailsOptions();
             return View(phone);
         }
 

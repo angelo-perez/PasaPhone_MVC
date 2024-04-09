@@ -10,6 +10,7 @@ $(document).ready(function () {
 
 });
 
+
 $(".phone-price").on('input', function () {
     var inputValue = $(this).val(); // Get the user's input value
     var formattedValue = formatPrice(inputValue); // Apply the formatNumber function
@@ -17,6 +18,10 @@ $(".phone-price").on('input', function () {
     // You can also call other functions or perform additional actions here
 });
 
+$(".meetup-pref-group").click(function () {
+    $(this).toggleClass("active inactive")
+        .find(".meetup-checkbox").prop("checked", $(this).hasClass("active"))
+})
 function formatPrice(input, fractionSeparator, thousandsSeparator, fractionSize) {
 
     fractionSeparator = fractionSeparator || '.';
