@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -33,8 +34,28 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
             var phoneData = TempData["PhoneData"] as string;
             var phone = JsonConvert.DeserializeObject<Phone>(phoneData);
 
+            var webRootPath = TempData["webRootPath"] as string;
+
+            var fileName = TempData["fileName"] as string;
+
+            var fileExtension = TempData["fileExtension"] as string;
+
+
             if (phone != null && ModelState.IsValid)
             {
+                if (HttpContext.Session.TryGetValue("phoneImage", out var tempImageBytes))
+                {
+                    byte[] imageBytes = tempImageBytes;
+                    HttpContext.Session.Remove("phoneImage");
+                    using var stream = new MemoryStream(imageBytes);
+                    IFormFile formFile = new FormFile(stream, 0, imageBytes.Length, fileName!, fileExtension!);
+                    if (formFile != null)
+                    {
+                        SavePhoneImage(phone, webRootPath!, formFile);
+                    }
+
+                }
+
                 spec.Phone = phone;
                 phone!.DateModified = DateTime.Now;
 
@@ -174,5 +195,24 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
             ViewBag.StorageOptions = StorageOptions;
         }
 
+        private void SavePhoneImage(Phone phone, string wwwRootPath, IFormFile? file)
+        {
+            // reference for wwwroot
+            if (file != null)
+            {
+                // for unique filename and extension (e.g ".jpg")
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                // for accessing images/phone inside wwwroot
+                string phonePath = Path.Combine(wwwRootPath, @"images\phone");
+
+                // for saving image
+                using (var filesStream = new FileStream(Path.Combine(phonePath, fileName), FileMode.Create))
+                {
+                    file.CopyTo(filesStream);
+                }
+
+                phone.ImageUrl = @"\images\phone\" + fileName;
+            }
+        }
     }
 }

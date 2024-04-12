@@ -17,10 +17,12 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
     public class PhonesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PhonesController(IUnitOfWork unitOfWork)
+        public PhonesController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Phones
@@ -63,12 +65,23 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
         // POST: Phones/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Brand,Model,Condition,Price,Description,Issues,Location,MeetupPreference,ImageUrl")] Phone phone)
+        public async Task<IActionResult> Create([Bind("Id,Brand,Model,Condition,Price,Description,Issues,Location,MeetupPreference")] Phone phone, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
                 // Serialize the Phone object to JSON and store it in TempData
                 TempData["PhoneData"] = JsonConvert.SerializeObject(phone);
+                // Pass webHostEnvironment and file to Specifications Controller
+                TempData["webRootPath"] = _webHostEnvironment.WebRootPath;
+                TempData["fileName"] = file.FileName;
+                TempData["fileExtension"] = Path.GetExtension(file.FileName);
+
+                using var fileStream = file.OpenReadStream();
+                using var memoryStream =  new MemoryStream();
+                fileStream.CopyTo(memoryStream);
+                var imageBytes = memoryStream.ToArray();
+                HttpContext.Session.Set("phoneImage", imageBytes);
+
                 return RedirectToAction("CreateSpecifications", "Specifications");
             }
             return View(phone);
@@ -94,7 +107,7 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
         // POST: Phones/Edit/Id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Brand,Model,Condition,Price,Description,Issues,Location,MeetupPreference")] Phone phone)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Brand,Model,Condition,Price,Description,Issues,Location,MeetupPreference")] Phone phone, IFormFile? file)
         {
             if (id != phone.Id)
             {

@@ -12,6 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // for repo pattern
 
+builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(30); });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +28,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 

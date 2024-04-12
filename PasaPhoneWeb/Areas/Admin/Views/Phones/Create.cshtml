@@ -13,9 +13,13 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <form method="post" id="create_form">
+        <form method="post" id="create_form" enctype="multipart/form-data">
             <div class="border p-3 rounded">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label for="create_phone_img" asp-for="ImageUrl" class="form-label"></label>
+                    <input asp-for="ImageUrl" id="create_phone_img" class="form-control" type="file" name="file" placeholder="No file chosen" />
+                </div>
                 <div class="form-floating mb-3">
                     <input asp-for="Brand" class="form-control" placeholder="Enter Phone's Brand" />
                     <label asp-for="Brand" class="control-label required-field"></label>
@@ -52,6 +56,7 @@
                     <label asp-for="Issues" class="control-label"></label>
                     <span asp-validation-for="Issues" class="text-danger"></span>
                 </div>
+
                 <div class="form-floating mb-2">
                     <input asp-for="Location" class="form-control" placeholder="Enter Your Location" />
                     <label asp-for="Location" class="control-label required-field"></label>
@@ -105,22 +110,11 @@
                     </div>
                     <span asp-validation-for="MeetupPreference" class="text-danger"></span>
                 </div>
-@*                 <div class="form-group d-flex justify-content-center mt-4">
+                 <div class="form-group d-flex justify-content-center mt-4">
                     <div class="col-6 col-md-3 m-1 m-md-2">
                         <a asp-controller="Phones" asp-action="Index" class="form-control btn btn-outline-primary">Back</a>
                     </div>
                     <div class="col-6 col-md-3 m-1 m-md-2">
-                        <button id="create_submit_btn" type="submit" class="submit_btn form-control btn btn-primary">Next</button>
-                    </div>
-                </div> *@
-                <div class="row">
-                    <div class="col-3 text-center">
-                        <a asp-controller="Phones" asp-action="Index" class="form-control btn btn-outline-danger">Cancel</a>
-                    </div>
-                    <div class="col-6">
-
-                    </div>
-                    <div class="col-3 text-center">
                         <button id="create_submit_btn" type="submit" class="submit_btn form-control btn btn-primary">Next</button>
                     </div>
                 </div>
