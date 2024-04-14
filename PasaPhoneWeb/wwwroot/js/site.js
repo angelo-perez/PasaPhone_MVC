@@ -3,25 +3,99 @@
 
 // Write your JavaScript code.
 
+// Multiform JS Codes
+
+var currentTab = 0; // Current tab is set to be the first tab (0)
+showTab(currentTab); // Display the current tab
+
+function showTab(n) {
+    // This function will display the specified tab of the form ...
+    var x = document.getElementsByClassName("tab");
+    x[n].style.display = "block";
+    // ... and fix the Previous/Next buttons:
+    if (n == 0) {
+        document.getElementById("prevBtn").style.display = "none";
+    } else {
+        document.getElementById("prevBtn").style.display = "inline";
+    }
+    if (n == (x.length - 1)) {
+        document.getElementById("nextBtn").style.display = "none";
+        document.getElementById("submitBtn").style.display = "inline";
+    } 
+    // ... and run a function that displays the correct step indicator:
+    fixStepIndicator(n)
+}
+
+function nextPrev(n) {
+    // This function will figure out which tab to display
+    var x = document.getElementsByClassName("tab");
+    // Exit the function if any field in the current tab is invalid:
+    if (n == 1 && !formClientValidation()) return false;
+    // Hide the current tab:
+    x[currentTab].style.display = "none";
+    // Increase or decrease the current tab by 1:
+    currentTab = currentTab + n;
+    // Otherwise, display the correct tab:
+    showTab(currentTab);
+}
+
+
+function fixStepIndicator(n) {
+    // This function removes the "active" class of all steps...
+    var i, x = document.getElementsByClassName("step");
+    for (i = 0; i < x.length; i++) {
+        x[i].className = x[i].className.replace(" active", "");
+    }
+    //... and adds the "active" class to the current step:
+    x[n].className += " active";
+}
+
+function formClientValidation() {
+    var $form = $("#multi_step_form");
+
+    $.validator.unobtrusive.parse($form);
+
+    $form.validate();
+
+    if ($form.valid()) {
+        $(".step")[currentTab].className += " finish";
+    }
+
+    return $form.valid() ;
+        
+}
+///////////////////////////////////////////////////////////////////////////
+
 $(document).ready(function () {
 
-    joinMeetupPreferences("create");
-    joinMeetupPreferences("edit");
+    $(".phone-price").on('input', function () {
+        var inputValue = $(this).val(); // Get the user's input value
+        var formattedValue = formatPrice(inputValue); // Apply the formatNumber function
+        $(this).val(formattedValue); // Update the input field with the formatted value
+        // You can also call other functions or perform additional actions here
+    });
 
+    $('#meetup_pref').select2({
+        placeholder: "--Select Meetup Preference(s)--",
+        data: [
+            { id: 0, text: "Public Meetup" },
+            { id: 1, text: "Door Pickup" },
+            { id: 2, text: "Door Dropoff" },
+        ],
+        multiple: true,
+        height: "100px"
+    });
+
+    $('#meetup_pref').change(function () {
+        var selections = $('#meetup_pref').select2('data').map(function (option) {
+            return option.text;
+        }).join(',');
+        var meetupPrefJoined = selections;
+        console.log(meetupPrefJoined);
+        $('#meetup_pref').val(meetupPrefJoined);
+    });
 });
 
-
-$(".phone-price").on('input', function () {
-    var inputValue = $(this).val(); // Get the user's input value
-    var formattedValue = formatPrice(inputValue); // Apply the formatNumber function
-    $(this).val(formattedValue); // Update the input field with the formatted value
-    // You can also call other functions or perform additional actions here
-});
-
-$(".meetup-pref-group").click(function () {
-    $(this).toggleClass("active inactive")
-        .find(".meetup-checkbox").prop("checked", $(this).hasClass("active"))
-})
 function formatPrice(input, fractionSeparator, thousandsSeparator, fractionSize) {
 
     fractionSeparator = fractionSeparator || '.';
@@ -54,13 +128,4 @@ function formatPrice(input, fractionSeparator, thousandsSeparator, fractionSize)
     return output;
 };
 
-function joinMeetupPreferences(action) {
-    $("#" + action + "_form").submit(function () {
 
-        var checkedPref = $("." + action + "-meetup-box:checked").map(function () {
-            return $(this).val().trim();
-        }).get().join(",");
-
-        $("#" + action + "_combined_meetup_pref").val(checkedPref);
-    });
-}

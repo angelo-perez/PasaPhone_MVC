@@ -10,5 +10,6 @@ namespace PasaPhone.DataAccess.Repository.IRepository
     public interface IPhoneRepository : IRepository<Phone>
     {
         void Update(Phone phone);
+        void CustomUpdate(Phone phone);
     }
 }

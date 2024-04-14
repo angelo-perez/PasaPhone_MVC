@@ -1,11 +1,11 @@
-﻿@model Phone
+﻿@model PhoneAndSpecificationsViewModel
 
 @{
     ViewData["Title"] = "Edit Listing";
 }
 
-<div class="card shadow border-0 mt-4">
-    <div class="card-header bg-primary bg-gradient ml-0 py-3">
+<div id="form_bg" class="row card shadow border-0 mt-4">
+    <div class="card-header text-center bg-primary bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="text-white py-2 m-0">Edit Phone Listing</h2>
@@ -13,123 +13,165 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <form method="post" id="edit_form">
-            <input asp-for="Id" type="hidden" />
-            <div class="border p-3 rounded">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Brand" class="form-control" placeholder="Enter Phone's Brand" />
-                    <label asp-for="Brand" class="control-label"></label>
-                    <span asp-validation-for="Brand" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Model" class="form-control" placeholder="Enter Phone's Model" />
-                    <label asp-for="Model" class="control-label"></label>
-                    <span asp-validation-for="Model" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <select asp-for="Condition" class="form-select form-control">
-                        <option selected disabled>--Select Condition--</option>
-                        <option value="New">New</option>
-                        <option value="Used - Like New">Used - Like New</option>
-                        <option value="Used - Good">Used - Good</option>
-                        <option value="Used - Fair">Used - Fair</option>
-                    </select>
-                    <label asp-for="Condition" class="control-label required-field"></label>
-                    <span asp-validation-for="Condition" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Price" class="phone-price form-control" placeholder="Enter Phone's Price in Peso'" />
-                    <label asp-for="Price" class="control-label"></label>
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <textarea asp-for="Description" class="form-control" style="height: 80px" placeholder="Tell about the phone"></textarea>
-                    <label asp-for="Description" class="control-label"></label>
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <textarea asp-for="Issues" class="form-control" style="height: 80px" placeholder="What are the issues?"></textarea>
-                    <label asp-for="Issues" class="control-label"></label>
-                    <span asp-validation-for="Issues" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-2">
-                    <input asp-for="Location" class="form-control" placeholder="Enter Your Location" />
-                    <label asp-for="Location" class="control-label"></label>
-                    <span asp-validation-for="Location" class="text-danger"></span>
-                </div>
-                <div class="form-group mb-3">
-                    <label asp-for="MeetupPreference" class="control-label fs-4 fw-bold"></label>
-                    <p class="fs-6 text-secondary mb-2">Select your preferred meetup arrangement for potential buyers.</p>
-                    <input asp-for="MeetupPreference" id="edit_combined_meetup_pref" type="hidden" value="" />
-                    @{
-                        string IsMeetupBoxChecked(string meetupOption)
-                        {
-                            return Model.MeetupPreference.Contains(meetupOption) ? "checked" : "";
-                        }
-                    }
-                    <div class="meetup-pref-group form-check d-flex justify-content-between align-items-center mb-2">
-                        <div class="mb-1 d-flex flex-row align-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16" style="margin-right: 10px">
-                                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
-                            </svg>
-                            <div class="meetup-pref-label-group d-flex flex-column">
-                                <label class="edit-meetup-label form-check-label">Public Meetup</label>
-                                <label class="edit-meetup-desc mb-0">Meet at public location.</label>
-                            </div>
-                        </div>
-                        <div class="mt-0">
-                            <input id="edit_public_meetup" class="form-check-input meetup-checkbox edit-meetup-box mt-0" type="checkbox" value="Public Meetup" @IsMeetupBoxChecked("Public Meetup") />
-                        </div>
+        <div class="step-group row">
+            <div class="step col">Details</div>
+            <div class="step col">Specifications</div>
+        </div>
+        <div class="text-center mb-3">
+            <img src="@Model.Phone.ImageUrl" alt="Phone Image" height="200px" />
+        </div>
+        <form method="post" id="multi_step_form" enctype="multipart/form-data">
+            <div class="border pt-4">
+                <!-- tabs -->
+                <div class="tab">
+                    <h2 class="fs-title">Details</h2>
+                    <h3 class="fs-subtitle">Tell something about the phone you selling</h3>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Phone.Id" type="hidden" />
+                    <input asp-for="Phone.ImageUrl" type="hidden" />
+                    <div class="mb-3">
+                        <label for="phone_img" asp-for="Phone.ImageUrl" class="form-label"></label>
+                        <input asp-for="Phone.ImageUrl" id="phone_img" class="form-control" type="file" name="file" placeholder="No file chosen" />
                     </div>
-                    <div class="meetup-pref-group form-check d-flex justify-content-between align-items-center mb-2">
-                        <div class="mb-1 d-flex flex-row align-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16" style="margin-right: 10px">
-                                <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1" />
-                            </svg>
-                            <div class="meetup-pref-label-group mb-0 d-flex flex-column">
-                                <label class="edit-meetup-label form-check-label">Door Pickup</label>
-                                <label class="edit-meetup-desc mb-0">Buyer picks up at your door.</label>
-                            </div>
-                        </div>
-                        <div class="mt-0">
-                            <input id="edit_door_pickup" class="form-check-input meetup-checkbox edit-meetup-box mt-0" type="checkbox" value="Door Pickup" @IsMeetupBoxChecked("Door Pickup") />
-                        </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Phone.Brand" class="form-control" placeholder="Enter Phone's Phone.Brand" />
+                        <label asp-for="Phone.Brand" class="control-label required-field"></label>
+                        <span asp-validation-for="Phone.Brand" class="text-danger"></span>
                     </div>
-                    <div class="meetup-pref-group form-check d-flex justify-content-between align-items-center mb-2">
-                        <div class="mb-1 d-flex flex-row align-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16" style="margin-right: 10px">
-                                <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1" />
-                            </svg>
-                            <div class="meetup-pref-label-group mb-0 d-flex flex-column">
-                                <label class="edit-meetup-label form-check-label">Door Dropoff</label>
-                                <label class="edit-meetup-desc mb-0">You drop off at buyer's door.</label>
-                            </div>
-                        </div>
-                        <div class="mt-0">
-                            <input id="edit_door_dropoff" class="form-check-input meetup-checkbox edit-meetup-box mt-0" type="checkbox" value="Door Dropoff" @IsMeetupBoxChecked("Door Dropoff") />
-                        </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Phone.Model" class="form-control" placeholder="Enter Phone's Phone.Model" />
+                        <label asp-for="Phone.Model" class="control-label required-field"></label>
+                        <span asp-validation-for="Phone.Model" class="text-danger"></span>
                     </div>
-                    <span asp-validation-for="MeetupPreference" class="text-danger"></span>
+                    <div class="form-floating mb-3">
+                        <select asp-for="Phone.Condition" class="form-select form-control">
+                            <option selected disabled>--Select Condition--</option>
+                            <option value="New">New</option>
+                            <option value="Used - Like New">Used - Like New</option>
+                            <option value="Used - Good">Used - Good</option>
+                            <option value="Used - Fair">Used - Fair</option>
+                        </select>
+                        <label asp-for="Phone.Condition" class="control-label required-field"></label>
+                        <span asp-validation-for="Phone.Condition" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Phone.Price" class="phone-price form-control" placeholder="Enter Phone's Price in Peso'" />
+                        <label asp-for="Phone.Price" class="control-label required-field"></label>
+                        <span asp-validation-for="Phone.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea asp-for="Phone.Description" class="form-control" style="height: 80px" placeholder="Tell about the phone"></textarea>
+                        <label asp-for="Phone.Description" class="control-label"></label>
+                        <span asp-validation-for="Phone.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea asp-for="Phone.Issues" class="form-control" style="height: 80px" placeholder="What are the issues?"></textarea>
+                        <label asp-for="Phone.Issues" class="control-label"></label>
+                        <span asp-validation-for="Phone.Issues" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Phone.Location" class="form-control" placeholder="Enter Your Location" />
+                        <label asp-for="Phone.Location" class="control-label required-field"></label>
+                        <span asp-validation-for="Phone.Location" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="control-label required-field">Meetup Preference(s)</label>
+                        <input asp-for="Phone.MeetupPreference" id="meetup_pref" class="form-control" placeholder="Enter Your Meetup Preferences" />
+                        <span asp-validation-for="Phone.MeetupPreference" class="text-danger"></span>
+                    </div>
+
                 </div>
-                <div class="form-group d-flex justify-content-center mt-4">
-                    <div class="col-6 col-md-3 m-1 m-md-2">
-                        <a asp-controller="Phones" asp-action="Index" class="form-control btn btn-outline-primary">Back</a>
+
+                <div class="tab">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Specification.SpecificationId" type="hidden" />
+                    <h2 class="fs-title">Specifications</h2>
+                    <h3 class="fs-subtitle">Provide its detailed specifications</h3>
+                    <div class="form-floating mb-3">
+                        <select asp-for="Specification.Os" asp-items="ViewBag.OsOptions" class="form-select form-control">
+                            <option selected disabled>--Select Operating System--</option>
+                        </select>
+                        <label asp-for="Specification.Os" class="control-label"></label>
+                        <span asp-validation-for="Specification.Os" class="text-danger"></span>
                     </div>
-                    <div class="col-6 col-md-3 m-1 m-md-2">
-                        <button id="edit_submit_btn" type="submit" class="submit-btn form-control btn btn-primary">Next</button>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Specification.Chipset" class="form-control" placeholder="Enter Phone's Chipset" />
+                        <label asp-for="Specification.Chipset" class="control-label"></label>
+                        <span asp-validation-for="Specification.Chipset" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select asp-for="Specification.Memory" asp-items="ViewBag.MemoryOptions" class="form-select" placeholder="Choose Phone's Memory Size">
+                            <option disabled selected>--Select Memory Size--</option>
+                        </select>
+                        <label asp-for="Specification.Memory" class="control-label"></label>
+                        <span asp-validation-for="Specification.Memory" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select asp-for="Specification.Storage" asp-items="ViewBag.StorageOptions" class="form-select" placeholder="Enter Phone's Storage Size">
+                            <option disabled selected>--Select Storage Size--</option>
+                        </select>
+                        <label asp-for="Specification.Storage" class="control-label"></label>
+                        <span asp-validation-for="Specification.Storage" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea asp-for="Specification.Camera" class="form-control" style="height: 80px" placeholder="Tell about the phone's camera'"></textarea>
+                        <label asp-for="Specification.Camera" class="control-label"></label>
+                        <span asp-validation-for="Specification.Camera" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Specification.DisplayResolution" class="form-control" placeholder="Enter Phone's Display Resolution" />
+                        <label asp-for="Specification.DisplayResolution" class="control-label"></label>
+                        <span asp-validation-for="Specification.DisplayResolution" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Specification.DisplayType" class="form-control" placeholder="Enter Phone's DisplayType" />
+                        <label asp-for="Specification.DisplayType" class="control-label"></label>
+                        <span asp-validation-for="Specification.DisplayType" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Specification.BatteryCapacity" class="form-control" placeholder="Enter Phone's BatteryCapacity" />
+                        <label asp-for="Specification.BatteryCapacity" class="control-label"></label>
+                        <span asp-validation-for="Specification.BatteryCapacity" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Specification.ChargingSpeed" class="form-control" placeholder="Enter Phone's ChargingSpeed" />
+                        <label asp-for="Specification.ChargingSpeed" class="control-label"></label>
+                        <span asp-validation-for="Specification.ChargingSpeed" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea asp-for="Specification.OtherSpecs" class="form-control" style="height: 80px" placeholder="Tell about the phone's other specifications'"></textarea>
+                        <label asp-for="Specification.OtherSpecs" class="control-label"></label>
+                        <span asp-validation-for="Specification.OtherSpecs" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row" style="overflow:auto;">
+                    <div class="col-3 text-start">
+                        <a asp-controller="Phones" asp-action="Index" id="cancelBtn" style="width: 100%" class="btn btn-danger">Cancel</a>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3 text-end">
+                        <button type="button" id="prevBtn" class="btn btn-secondary" style="width: 100%" onclick="nextPrev(-1)">Previous</button>
+                    </div>
+                    <div class="col-3 text-end">
+                        <button type="button" id="nextBtn" class="btn btn-primary" style="width: 100%" onclick="nextPrev(1)">Next</button>
+                        <button id="submitBtn" type="submit" class="submit action-button submit_btn form-control btn btn-primary" style="display:none;">Submit</button>
                     </div>
                 </div>
             </div>
         </form>
+
     </div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         var defaultPrice = document.querySelector(".phone-price");
         var formattedDefaultPrice = formatPrice(defaultPrice.value);
         defaultPrice.value = formattedDefaultPrice;
+
     </script>
 }

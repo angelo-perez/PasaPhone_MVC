@@ -59,32 +59,32 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
         // GET: Phones/Create
         public IActionResult Create()
         {
+            InitializeSpecificationOptions();
             return View();
         }
 
         // POST: Phones/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Brand,Model,Condition,Price,Description,Issues,Location,MeetupPreference")] Phone phone, IFormFile? file)
+        public async Task<IActionResult> Create(PhoneAndSpecificationsViewModel vm, IFormFile? file)
         {
+            var phone = vm.Phone;
+            var spec = vm.Specification;
+
             if (ModelState.IsValid)
             {
-                // Serialize the Phone object to JSON and store it in TempData
-                TempData["PhoneData"] = JsonConvert.SerializeObject(phone);
-                // Pass webHostEnvironment and file to Specifications Controller
-                TempData["webRootPath"] = _webHostEnvironment.WebRootPath;
-                TempData["fileName"] = file.FileName;
-                TempData["fileExtension"] = Path.GetExtension(file.FileName);
+                SavePhoneImage(phone, file);
 
-                using var fileStream = file.OpenReadStream();
-                using var memoryStream =  new MemoryStream();
-                fileStream.CopyTo(memoryStream);
-                var imageBytes = memoryStream.ToArray();
-                HttpContext.Session.Set("phoneImage", imageBytes);
+                spec.Phone = phone;
+                phone!.DateModified = DateTime.Now;
 
-                return RedirectToAction("CreateSpecifications", "Specifications");
+                _unitOfWork.Phone.Add(phone);
+                _unitOfWork.Specification.Add(spec);
+                await _unitOfWork.Save();
+                TempData["success"] = "Phone listed successfully";
+                return RedirectToAction("Index", "Phones");
             }
-            return View(phone);
+            return View(vm);
         }
 
         // GET: Phones/Edit/Id
@@ -96,19 +96,29 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
             }
 
             var phone = await _unitOfWork.Phone.Get(u => u.Id == id);
+            var spec = await _unitOfWork.Specification.Get(s => s.SpecificationId == id);
 
-            if (phone == null)
+            if (phone == null || spec == null)
             {
                 return NotFound();
             }
-            return View(phone);
+            PhoneAndSpecificationsViewModel vm = new PhoneAndSpecificationsViewModel{
+                Phone = phone!,
+                Specification = spec!
+            };
+
+            InitializeSpecificationOptions();
+            return View(vm);
         }
 
         // POST: Phones/Edit/Id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Brand,Model,Condition,Price,Description,Issues,Location,MeetupPreference")] Phone phone, IFormFile? file)
+        public async Task<IActionResult> Edit(int id, PhoneAndSpecificationsViewModel vm, IFormFile? file)
         {
+            var phone = vm.Phone;
+            var spec = vm.Specification;
+
             if (id != phone.Id)
             {
                 return NotFound();
@@ -118,11 +128,18 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
             {
                 try
                 {
-                    TempData["editedPhoneData"] = JsonConvert.SerializeObject(phone);
+                    SavePhoneImage(phone, file);
+
+                    phone!.DateModified = DateTime.Now;
+;
+                    _unitOfWork.Phone.Update(phone);
+                    _unitOfWork.Specification.Update(spec);
+                    await _unitOfWork.Save();
+                    TempData["success"] = "Phone updated successfully";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PhoneExists(phone.Id))
+                    if (!PhoneExists(phone.Id) && !SpecificationExists(spec.SpecificationId))
                     {
                         return NotFound();
                     }
@@ -131,9 +148,9 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("EditSpecifications", "Specifications", new {phoneId = phone.Id});
+                return RedirectToAction("Index", "Phones");
             }
-            return View(phone);
+            return View(vm);
         }
 
         // GET: Phones/Delete/Id
@@ -161,6 +178,7 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
             var phone = await _unitOfWork.Phone.Get(u => u.Id == id);
             if (phone != null)
             {
+                DeletePhoneImage(phone.ImageUrl);
                 _unitOfWork.Phone.Remove(phone);
             }
 
@@ -176,6 +194,11 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
         private bool PhoneExists(int id)
         {
             return _unitOfWork.Phone.IsItemExists(e => e.Id == id);
+        }
+
+        private bool SpecificationExists(int id)
+        {
+            return _unitOfWork.Specification.IsItemExists(u => u.SpecificationId == id);
         }
 
         private void InitializePhoneDetailsOptions()
@@ -197,6 +220,105 @@ namespace PasaPhoneWeb.Areas.Admin.Controllers
 
             ViewBag.ConditionOptions = ConditionOptions;
         }
+
+        private void InitializeSpecificationOptions()
+        {
+            List<string> osList = new List<string>() {
+                "Android",
+                "iOS",
+                "Other"
+            };
+
+            List<String> MemorySizeList = new List<string>() {
+                "<1GB",
+                "1GB",
+                "2GB",
+                "3GB",
+                "4GB",
+                "6GB",
+                "8GB",
+                "12GB",
+                "16GB",
+                ">16GB"
+            };
+
+            List<String> StorageSizeList = new List<string>() {
+                "<8GB",
+                "8GB",
+                "16GB",
+                "32GB",
+                "64GB",
+                "128GB",
+                "256GB",
+                "512GB",
+                "1TB",
+                ">1TB"
+            };
+
+            IEnumerable<SelectListItem> OsOptions = osList.Select(o =>
+                new SelectListItem
+                {
+                    Text = o,
+                    Value = o.ToString()
+                }
+            );
+
+            IEnumerable<SelectListItem> MemoryOptions = MemorySizeList.Select(m =>
+                new SelectListItem
+                {
+                    Text = m,
+                    Value = m.ToString()
+                }
+            );
+
+            IEnumerable<SelectListItem> StorageOptions = StorageSizeList.Select(s =>
+                new SelectListItem
+                {
+                    Text = s,
+                    Value = s.ToString()
+                }
+            );
+
+            ViewBag.OsOptions = OsOptions;
+            ViewBag.MemoryOptions = MemoryOptions;
+            ViewBag.StorageOptions = StorageOptions;
+        }
+
+        private void SavePhoneImage(Phone phone, IFormFile? file)
+        {
+            // reference for wwwroot
+            var wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (file != null)
+            {
+                // for unique filename and extension (e.g ".jpg")
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                // for accessing images/phone inside wwwroot
+                string phonePath = Path.Combine(wwwRootPath, @"images\phone");
+
+                DeletePhoneImage(phone.ImageUrl); // delete old image (if there's one)
+
+                // for saving image
+                using (var filesStream = new FileStream(Path.Combine(phonePath, fileName), FileMode.Create))
+                {
+                    file.CopyTo(filesStream);
+                }
+
+                phone.ImageUrl = @"\images\phone\" + fileName;
+            }
+        }
+
+        private void DeletePhoneImage(string? imgUrl) {
+            if (!string.IsNullOrEmpty(imgUrl)) // checks if there's an old image
+            {
+                var wwwRootPath = _webHostEnvironment.WebRootPath;
+                var oldImgPath = Path.Combine(wwwRootPath, imgUrl.TrimStart('\\'));
+                if (System.IO.File.Exists(oldImgPath))
+                {
+                    System.IO.File.Delete(oldImgPath);
+                }
+            }
+        }
+
     }
 
 }

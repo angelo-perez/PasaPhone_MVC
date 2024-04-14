@@ -23,5 +23,26 @@ namespace PasaPhone.DataAccess.Repository
         {
             _context.Phones.Update(phone);
         }
+
+        public void CustomUpdate(Phone phone)
+        {
+            var phoneFromDb = _context.Phones.FirstOrDefault(p => p.Id == phone.Id);
+            if(phoneFromDb != null)
+            {
+                if(phoneFromDb.ImageUrl != null)
+                {
+                    phoneFromDb.ImageUrl = phone.ImageUrl;
+                }
+                phoneFromDb.Brand = phone.Brand;
+                phoneFromDb.Model = phone.Model;
+                phoneFromDb.Condition = phone.Condition;
+                phoneFromDb.Price = phone.Price;
+                phoneFromDb.Description = phone.Description;
+                phoneFromDb.Issues = phone.Issues;
+                phoneFromDb.Location = phone.Location;
+                phoneFromDb.MeetupPreference = phone.MeetupPreference;
+                phoneFromDb.DateModified = phone.DateModified;
+            }
+        }
     }
 }
